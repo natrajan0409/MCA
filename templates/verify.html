@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Verification</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  </head>
+  <body>
+    <div class="container">
+      <h1>Verification</h1>
+      <p>OTP sent to {{ email }}. Please enter the OTP below:</p>
+      <form action="{{ url_for('verify') }}" method="post">
+        <input type="hidden" name="username" value="{{ username }}">
+        <input type="hidden" name="password" value="{{ password }}">
+        <input type="hidden" name="email" value="{{ email }}">
+        <input type="hidden" name="otp" value="{{ otp }}">
+        <label for="entered_otp"><b>OTP</b></label>
+        <input type="text" placeholder="Enter OTP" name="entered_otp" required>
+        <button type="submit">Verify</button>
+      </form>
+    </div>
+  </body>
+</html>

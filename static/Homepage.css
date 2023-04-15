@@ -1,0 +1,277 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f0f0f0;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.top-right {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background-color: transparent;
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.top-right button {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  background-color: #007bff;
+  color: black;
+  font-size: 14px;
+}
+
+.top-right button:hover {
+  color: aquamarine;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 2rem;
+}
+
+th, td {
+  padding: 0.5rem;
+  text-align: left;
+  border: 1px solid #0a0000;
+}
+
+tr:hover {
+  background-color: aqua;
+}
+
+th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+  }
+  
+  .modal-content {
+  background-color: #f0f0f0;
+  margin:  auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 50%;
+  }
+  
+  h3 {
+    background-color: #007bff;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    margin-bottom: 40px;
+}
+
+
+  .close {
+  color:black;
+  float: top left;
+  font-size: 28px;
+  font-weight: bold;
+  }
+  
+  .close:hover,
+  .close:focus {
+  color: #aaa;
+  text-decoration: none;
+  cursor: pointer;
+  }
+  
+  .form-group {
+  margin-bottom: 20px;
+  }
+  
+  /* Style the input fields and labels */
+  label {
+  display: inline-block;
+  width: 100px;
+  font-weight: bold;
+  }
+  
+  input[type="text"], input[type="tel"], input[type="number"], input[type="date"], select {
+  width: 300px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-size: 16px;
+  margin-bottom: 10px;
+  }
+  
+  input[type="text"]:focus, input[type="tel"]:focus, input[type="number"]:focus, input[type="date"]:focus, select:focus {
+  outline: none;
+  border-color: #007bff;
+  }
+  
+  button[type="submit"] {
+  background-color: #007bff;
+  color: black;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 10px 20px;
+  }
+  
+  button[type="submit"]:hover {
+  background-color:  whitesmoke;
+  }
+  
+  
+  .error-message {
+  color: red;
+  margin-top: 5px;
+  }
+  
+  .success-message {
+  color: green;
+  margin-top: 5px;
+  }  
+
+
+  /** modify style **/
+
+  /* General styles */
+body {
+  font-family: Arial, sans-serif;
+}
+
+/* Modal styles */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 50%;
+}
+
+.close {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.close:hover, .close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* Form styles */
+form#modifyPatientForm {
+  display: flex;
+  flex-direction: column;
+}
+
+form#modifyPatientForm label {
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+form#modifyPatientForm input[type="text"],
+form#modifyPatientForm input[type="number"],
+form#modifyPatientForm input[type="date"] {
+  padding: 5px;
+  margin-top: 5px;
+  width: 100%;
+}
+
+form#modifyPatientForm button[type="submit"],
+form#modifyPatientForm button[type="button"] {
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 15px 0;
+  cursor: pointer;
+}
+
+form#modifyPatientForm button[type="button"] {
+  background-color: #f44336;
+}
+
+/* Add fade-in effect to modal */
+.modal {
+  animation-name: fadeIn;
+  animation-duration: 0.5s;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+
+/* Add slide-down effect to top-right button */
+.top-right button {
+  transition: transform 0.3s ease-in-out;
+}
+
+.top-right button:hover {
+  transform: translateY(3px);
+}
+
+/* Add fade-out effect to success and error messages */
+.success-message, .error-message {
+  animation-name: fadeOut;
+  animation-duration: 3s;
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 3;
+  }
+  to {
+    opacity: 0;
+  }
+}

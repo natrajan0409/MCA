@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Reset Password</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  </head>
+  <body>
+    <div class="container">
+      <h1>Reset Password</h1>
+      <p>OTP sent to {{ email }}. Please enter the OTP and new password below:</p>
+      <form action="{{ url_for('reset') }}" method="post">
+        <input type="hidden" name="email" value="{{ email }}">
+        <input type="hidden" name="otp" value="{{ otp }}">
+        <label for="entered_otp"><b>OTP</b></label>
+        <input type="text" placeholder="Enter OTP" name="entered_otp" required>
+        <label for="password"><b>New Password</b></label>
+        <input type="password" placeholder="Enter New Password" name="password" required>
+        <button type="submit">Reset</button>
+      </form>
+    </div>
+  </body>
+</html>
