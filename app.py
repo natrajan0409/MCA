@@ -2,6 +2,7 @@ from curses import flash
 from datetime import datetime
 import smtplib
 import mysql.connector
+from config import DB_HOST, DB_USER, DB_PASSWORD, DB_NAME
 import random
 from flask import Flask, render_template, request, redirect, session, url_for
 from smtplib import SMTP_SSL
@@ -14,16 +15,15 @@ app = Flask(__name__)
 user_session =None;
 
 
-db_config = {
-    "host": "127.0.0.1",
-    "port": 3306,
-    "user": "root",
-    "password": "Nat@852906",
-    "database": "mydatabase"
-}
-
 # Connect to the database
-mydb = mysql.connector.connect(**db_config)
+# mydb = mysql.connector.connect(**db_config)
+mydb = mysql.connector.connect(
+    host=DB_HOST,
+    user=DB_USER,
+    password=DB_PASSWORD,
+    database=DB_NAME
+)
+
 
 # Create a cursor object
 mycursor = mydb.cursor()

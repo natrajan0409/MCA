@@ -24,7 +24,6 @@
     <!-- Add a new patient records in home page -->
     <div id="addPatientModal" class="modal">
         <div class="modal-content">
-          <span class="close">&times;</span>
           <h3>Add New Patient Details</h3>
           <form id="addPatientForm" method="post" action="{{ url_for('add_record') }}">
             <div class="form-group">
@@ -71,6 +70,7 @@
             </div>
       
             <button type="submit" class="btn btn-primary">Add Patient</button>
+            <button type="submit" class="close">Close</button>
           </form>
         </div>
       </div>
