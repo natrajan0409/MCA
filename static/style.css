@@ -1,14 +1,30 @@
 body {
-  background-color: #f2f2f2;
+  background-image: url('loginbg.jpg');
+  background-size: cover;
+  display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f0f0f0;
 }
 
 .container {
-  margin: 0 auto;
-  width: 50%;
-  text-align: center;
-  padding-top: 50px;
+  position: absolute;
+  right: 0;
+  top: 98px;
+  margin: 10px; /* Adjust this value to move the form up or down */
+  max-width: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 450px;
+  height: 410px;
+  border-radius: 80%;
+  padding: 40px;
+  box-shadow: 0 4px 6px rgba(43, 76, 114, 0.385);
 }
-
 
 input[type=text],
 input[type=password],
@@ -19,7 +35,7 @@ input[type=email] {
   display: inline-block;
   border: 1px solid #ccc;
   box-sizing: border-box;
-  transition: border-color 0.3s ease-in-out;
+  transition: border-color 0.5s ease-in-out;
 }
 
 input[type=text]:focus,
@@ -70,3 +86,4 @@ p {
     opacity: 1;
   }
 }
+

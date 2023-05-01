@@ -14,6 +14,9 @@
         .form-container input {
             display: inline;
         }
+        table tr:hover {
+            background-color: lightsteelblue;
+          }
     </style>
 </head>
 <body>
@@ -26,10 +29,10 @@
             </div>
             <form id="modifyPatientForm" method="post" action="/update_record">
                 <div class="form-container">
-                    <input type="text" id="name" name="name" value="{{ name }}" placeholder="Name" title="Name" required>
+                    <input type="text" id="name" name="name" value="{{ name }}" placeholder="Name" title="Name" required readonly>
                     <input type="text" id="phone" name="phone" value="{{ phone }}" placeholder="Phone" title="Phone" required>
                     <input type="number" id="age" name="age" value="{{ age }}" placeholder="Age" title="Age" required>
-                    <input type="text" id="gender" name="gender" value="{{ gender }}" placeholder="Gender" title="Gender" required>
+                    <input type="text" id="gender" name="gender" value="{{ gender }}" placeholder="Gender" title="Gender" required readonly>
                     <input type="text" id="diagnosis" name="diagnosis" value="{{ diagnosis }}" placeholder="Diagnosis" title="Diagnosis" required>
                     <input type="text" id="treatment" name="treatment" value="{{ treatment }}" placeholder="Treatment" title="Treatment" required>
                     <input type="date" id="date" name="date" value="{{ date }}" placeholder="Date" title="Date" required>
@@ -38,15 +41,11 @@
             </form>
             <h2>Patient History</h2>
             <table>
-                <thead>
                     <tr>
                         <th>Last Visit Date</th>
                         <th>Treatment</th>
                         <th>Diagnosis</th>
-                        
                     </tr>
-                </thead>
-                <tbody>
                     {% for record in history %}
                     <tr>
                         <td>{{ record[2] }}</td>
@@ -54,7 +53,6 @@
                         <td>{{ record[0] }}</td>
                     </tr>
                     {% endfor %}
-                </tbody>
             </table>
         </div>
     </div>

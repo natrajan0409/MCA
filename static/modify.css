@@ -1,4 +1,6 @@
 body {
+    background-image: url('home.jpg');
+    background-size: cover;
     font-family: Arial, sans-serif;
     background-color: #f0f0f0;
     margin: 0;
@@ -7,10 +9,7 @@ body {
   
   
   h1 {
-    background-color: #007bff;
-    color: white;
     text-align: center;
-    padding: 20px;
     margin-bottom: 40px;
   }
   
@@ -45,7 +44,7 @@ body {
   }
   
   button {
-    background-color: #007bff;
+    background-color: #007C02;
     color: white;
     font-weight: bold;
     padding: 10px 20px;
@@ -58,12 +57,13 @@ body {
   }
   
   button:hover {
-    background-color: #0062cc;
+    color: black;
+    background-color: white;
   }
   
   button:active {
     box-shadow: none;
-    transform: translateY(1px);
+    transform: translateY(2px);
   }
   
   .button-container {
@@ -96,28 +96,26 @@ body {
   }
   
   
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 2rem;
-}
-
-th, td {
-  padding: 0.5rem;
-  text-align: left;
-  border: 1px solid #0a0000;
-}
-
-tr:hover {
-  background-color: aqua;
-}
-
-
-th {
-  background-color: #f2f2f2;
-  font-weight: bold;
-}
-
-tr:nth-child(even) {
-  background-color: #f2f2f2;
-}
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 2rem;
+  }
+  
+  th, td {
+    padding: 0.6rem;
+    text-align: left;
+    border: 1px solid #0a0000;
+  }
+  
+  tr:hover {
+    background-color: lightsteelblue;
+  }
+  
+  
+  th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+  }
+  
+  
