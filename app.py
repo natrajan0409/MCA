@@ -1,4 +1,5 @@
 from curses import flash
+from datetime import datetime
 import smtplib
 import mysql.connector
 import random
@@ -63,6 +64,8 @@ def login():
     return redirect(url_for("home"))
   else:
     return "Invalid username or password"
+  
+  
   
 @app.route("/register", methods=["GET", "POST"])
 def register():
@@ -132,6 +135,12 @@ def get_patient_details_for_user(user_id):
     mycursor.execute(query, (user_id,))
     rows = mycursor.fetchall()
     return rows
+  
+def get_patient_history(name):
+    query = "select diagnosis,treatment,visit_date from patienthistory WHERE name = %s"
+    mycursor.execute(query, (name,))
+    patient_history = mycursor.fetchall()
+    return patient_history
 
 @app.route("/home",methods=['GET', 'POST'])
 def home():
@@ -169,6 +178,7 @@ def add_record():
     return render_template("add_new_record.html")
 
 
+  
 @app.route('/modify')
 def modify():
     # Extract the parameters from the URL
@@ -185,8 +195,15 @@ def modify():
     mycursor.execute(query, (user_session, name, phone, age, gender, diagnosis, treatment, Next_appointment_date))
     patient_details = mycursor.fetchone()
     
+     # Retrieve the patient history from the database
+    patient_history =get_patient_history(name)
+    print(patient_history)
+    
     # Render the modify.html template and pass the parameters and patient details
-    return render_template('modify.html', name=name, phone=phone, age=age, gender=gender, diagnosis=diagnosis, treatment=treatment, date=Next_appointment_date, patient_details=patient_details)
+    return render_template('modify.html', name=name, phone=phone, age=age, gender=gender, diagnosis=diagnosis, treatment=treatment, date=Next_appointment_date, patient_details=patient_details, history=patient_history)
+
+
+
 
 @app.route('/update_record', methods=['POST'])
 def update_record():
@@ -204,13 +221,21 @@ def update_record():
     # Prepare the UPDATE query
     query = "UPDATE patientdetails SET phone_number = %s, age = %s, Sex = %s, diagnosis = %s, treatment = %s, Next_appointment_date = %s WHERE name = %s AND username = %s"
 
-
-    # Execute the query and commit the changes
+     # Execute the query and commit the changes
     mycursor.execute(query, (phone_number, age, Sex, diagnosis, treatment, Next_appointment_date, name, username))
     mydb.commit()
 
+    # Update the patient history in the database
+    visit_date = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    feedback = request.form.get('feedback')
+    mycursor.execute("INSERT INTO patienthistory (name, treatment, visit_date, diagnosis, feedback) VALUES (%s, %s, %s, %s, %s)", (name, treatment, visit_date, diagnosis, feedback))
+    mydb.commit()
+
+   
+
     # Redirect to the home page
     return redirect(url_for("home"))
+
 
   
 @app.route('/delete_record', methods=['POST'])
