@@ -225,8 +225,9 @@ def update_record():
     mycursor.execute(query, (phone_number, age, Sex, diagnosis, treatment, Next_appointment_date, name, username))
     mydb.commit()
 
+
     # Update the patient history in the database
-    visit_date = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    visit_date = datetime.now().strftime('%d-%d-%y %H:%M:%S')
     feedback = request.form.get('feedback')
     mycursor.execute("INSERT INTO patienthistory (name, treatment, visit_date, diagnosis, feedback) VALUES (%s, %s, %s, %s, %s)", (name, treatment, visit_date, diagnosis, feedback))
     mydb.commit()
