@@ -7,6 +7,7 @@ import random
 from flask import Flask, render_template, request, redirect, session, url_for
 from smtplib import SMTP_SSL
 from email.message import EmailMessage
+from datetime import datetime
 
 
 
@@ -227,7 +228,7 @@ def update_record():
 
 
     # Update the patient history in the database
-    visit_date = datetime.now().strftime('%d-%d-%y %H:%M:%S')
+    visit_date = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     feedback = request.form.get('feedback')
     mycursor.execute("INSERT INTO patienthistory (name, treatment, visit_date, diagnosis, feedback) VALUES (%s, %s, %s, %s, %s)", (name, treatment, visit_date, diagnosis, feedback))
     mydb.commit()
