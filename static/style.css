@@ -28,7 +28,10 @@ body {
 
 input[type=text],
 input[type=password],
-input[type=email] {
+input[type=email],
+input[type=hospital_name],
+input[type=location]
+ {
   width: 100%;
   padding: 12px 20px;
   margin: 8px 0;
@@ -40,7 +43,9 @@ input[type=email] {
 
 input[type=text]:focus,
 input[type=password]:focus,
-input[type=email]:focus {
+input[type=email]:focus,
+input[type=hospital_name]:focus,
+input[type=location]:focus {
   outline: none;
   border-color: #007bff;
 }

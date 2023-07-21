@@ -1,25 +1,30 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>User Registration</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-  </head> 
-  
-  <body>
-    <div class="container">
-      <h1>Registration</h1>
-      <form action="{{ url_for('register') }}" method="post">
-        <label for="username"><b>Username</b></label>
-        <input type="text" placeholder="Enter Username" name="username" required>
+<head>
+  <title>User Registration</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head> 
+<body>
+  <div class="container">
+    <h1>Registration</h1>
+    <form action="{{ url_for('register') }}" method="post">
+      <label for="username"><b>Username</b></label>
+      <input type="text" id="username" placeholder="Enter Username" name="username" required>
 
-        <label for="password"><b>Password</b></label>
-        <input type="password" placeholder="Enter Password" name="password" required>
+      <label for="password"><b>Password</b></label>
+      <input type="password" id="password" placeholder="Enter Password" name="password" required>
 
-        <label for="email"><b>Email</b></label>
-        <input type="email" placeholder="Enter Email" name="email" required>
-        <button type="submit">Register</button>
-      </form>
-      <p>Already have an account? <a href="{{ url_for('login_page') }}">Login</a></p>
-    </div>
-  </body>
+      <label for="email"><b>Email</b></label>
+      <input type="email" id="email" placeholder="Enter Email" name="email" required>
+
+      <label for="hospital_name"><b>Hospital Name</b></label>
+      <input type="hospital_name" id="hospital_name" placeholder="Enter Hospital Name" name="hospital_name" required>
+
+      <label for="location"><b>Location</b></label>
+      <input type="location" id="location" placeholder="Enter Location" name="location" required>
+      <button type="submit">Register</button>
+    </form>
+    <p>Already have an account? <a href="{{ url_for('login_page') }}">Login</a></p>
+  </div>
+</body>
 </html>

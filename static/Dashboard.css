@@ -1,0 +1,192 @@
+/* General styling for body and header */
+body {
+    background-image: url('homepage2.jpg');
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.header {
+    background-color: #f1f1f1;
+    padding: 20px;
+    text-align: center;
+}
+
+/* Styling for top-right buttons */
+.top-right {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+.blue-button,
+.green-button {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
+.blue-button {
+    background-color: #4CAF50;
+}
+
+.top-right button:hover {
+    color: black;
+    background-color: white;
+}
+
+.top-right button {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  background-color: #007C02;
+  color: #fff;
+  font-size: 14px;
+}
+
+.top-right button:hover {
+  color: black;
+  background-color: white;
+}
+
+
+/* Sidebar and doctor info */
+.sidebar {
+    height: 100%;
+    width: 200px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #e2dbdb;
+    padding-top: 20px;
+}
+
+.doctor-info {
+    text-align: center;
+    padding-bottom: 20px;
+}
+
+.doctor-info img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+}
+
+/* Main content */
+.main-content {
+    margin-left: 220px;
+    padding: 20px;
+}
+
+/* Search patient form */
+.search-patient {
+    margin-bottom: 20px;
+}
+
+.search-patient input[type="text"] {
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.search-patient button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    cursor: pointer;
+}
+
+/* Patient list */
+.patient-list ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.patient-list li {
+    padding: 10px 0;
+    border-bottom: 1px solid #ccc;
+}
+
+/* Styling for doctor name in header */
+.header h1 {
+    margin: 0;
+    padding: 0;
+    color: #333;
+}
+
+.header h2 {
+    margin: 5px 0;
+    padding: 0;
+}
+
+/* Responsive styles */
+@media screen and (max-width: 768px) {
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: static;
+    }
+
+    .main-content {
+        margin-left: 0;
+    }
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 2rem;
+  }
+  
+  th, td {
+    padding: 0.5rem;
+    text-align: left;
+    border: 1px solid #0a0000;
+  }
+  
+  tr:hover {
+    background-color: lightsteelblue;
+  }
+  
+  
+  th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+  }
+  
+  tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+
+/* Add slide-down effect to top-right button */
+.top-right button {
+    transition: transform 0.3s ease-in-out;
+}
+
+.top-right button:hover {
+    transform: translateY(3px);
+}
+
+/* Add fade-out effect to success and error messages */
+.success-message, .error-message {
+    animation-name: fadeOut;
+    animation-duration: 3s;
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 3;
+    }
+    to {
+        opacity: 0;
+    }
+}

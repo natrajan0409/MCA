@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/static/modify.css">
+    <title>Create Sub User</title>
+</head>
+<body>
+    <h1>Create Sub User</h1>
+
+    <div class="top-right">
+        <button onclick="location.href='/home'">Back to Home</button>
+    </div>
+    <form action="/role_page" method="post">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required><br>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required><br>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required><br>
+
+        <label for="specialization">specialization:</label>
+        <input type="specialization" id="specialization" name="specialization" required><br>
+
+        <label for="contact_number">contact_number:</label>
+        <input type="contact_number" id="contact_number" name="contact_number" required><br>
+
+        <label for="role">Role:</label>
+        <select id="role" name="role" required>
+            <option value="" disabled selected>Select Role</option>
+            <option value="receptionist">Receptionist</option>
+            <option value="doctor">Doctor</option>
+        </select><br>
+
+        <input type="submit" value="Create Sub User">
+    </form>
+</body>
+</html>

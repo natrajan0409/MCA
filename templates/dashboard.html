@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Doctor Dashboard</title>
+    <link rel="stylesheet" type="text/css" href="/static/Dashboard.css">
+</head>
+<body>
+    <div class="header">
+        <h1>Welcome, {{ doctor_name }}!</h1>
+        <p>{{ greeting }}, the current time is {{ current_time.strftime("%H:%M") }}</p>
+    </div>
+
+    <div class="top-right">
+        <button class="blue-button" onclick="location.href='/'">Logout</button>
+        {% if user_type == "Admin" %}
+        <button onclick="location.href='/home'">Back to Home</button>
+        {% endif %}
+    </div>
+
+    <div class="sidebar">
+        <div class="doctor-info">
+            <img src="{{ doctor_photo }}" alt="Doctor Photo">
+            <h2>{{ doctor_name }}</h2>
+        </div>
+        <div class="other-doctors">
+            <h3>Other Doctors in the Hospital</h3>
+            <ul>
+                {% for doctor in doctors %}
+                    <li>{{ doctor }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <h2>All Patients</h2>
+        <div class="search-patient">
+            <form id="searchForm" method="get" action="{{ url_for('search_record') }}">
+                <input type="text" id="patient_name" name="patient_name" placeholder="Search Patient...">
+                <button type="submit">Search</button>
+            </form>
+        </div>
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Phone</th>
+                <th>Age</th>
+                <th>Gender</th>
+                <th>Diagnosis</th>
+                <th>Treatment</th>
+                <th>Date</th>
+            </tr>
+            {% for patient in patient_details %}
+            <tr ondblclick="openModifyPage('{{ patient[1] }}', '{{ patient[2] }}', '{{ patient[3] }}', '{{ patient[4] }}', '{{ patient[5] }}', '{{ patient[6] }}', '{{ patient[7] }}')">
+                <td>{{ patient[1] }}</td>
+                <td>{{ patient[2] }}</td>
+                <td>{{ patient[3] }}</td>
+                <td>{{ patient[4] }}</td>
+                <td>{{ patient[5] }}</td>
+                <td>{{ patient[6] }}</td>
+                <td>{{ patient[7] }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+<script> 
+    function openModifyPage( name, phone, age, gender, diagnosis, treatment, date) {
+        window.location.href = '/modify?id=' + encodeURIComponent(name) +
+            '&name=' + encodeURIComponent(name) +
+            '&phone=' + encodeURIComponent(phone) +
+            '&age=' + encodeURIComponent(age) +
+            '&gender=' + encodeURIComponent(gender) +
+            '&diagnosis=' + encodeURIComponent(diagnosis) +
+            '&treatment=' + encodeURIComponent(treatment) +
+            '&date=' + encodeURIComponent(date);
+    }
+
+
+    </script> 
+
+</body>
+</html>
