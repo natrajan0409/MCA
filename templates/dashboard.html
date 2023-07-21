@@ -34,11 +34,13 @@
 
     <div class="main-content">
         <h2>All Patients</h2>
-        <div class="search-patient">
-            <form id="searchForm" method="get" action="{{ url_for('search_record') }}">
-                <input type="text" id="patient_name" name="patient_name" placeholder="Search Patient...">
-                <button type="submit">Search</button>
-            </form>
+         <div class="top-left">
+        {% if user_type != "Admin" %}
+      <form id="searchForm" method="post" action="{{ url_for('search_record') }}">
+        <input type="text" id="searchInput" name="searchInput" placeholder="Search...">
+        <button type="submit">Search</button>
+        {% endif %}
+      </form>
         </div>
         <table>
             <tr>
@@ -51,7 +53,7 @@
                 <th>Date</th>
             </tr>
             {% for patient in patient_details %}
-            <tr ondblclick="openModifyPage('{{ patient[1] }}', '{{ patient[2] }}', '{{ patient[3] }}', '{{ patient[4] }}', '{{ patient[5] }}', '{{ patient[6] }}', '{{ patient[7] }}')">
+            <tr {% if user_type == "Admin" %} disabled {% endif %} ondblclick="openModifyPage('{{ patient[1] }}', '{{ patient[2] }}', '{{ patient[3] }}', '{{ patient[4] }}', '{{ patient[5] }}', '{{ patient[6] }}', '{{ patient[7] }}')">
                 <td>{{ patient[1] }}</td>
                 <td>{{ patient[2] }}</td>
                 <td>{{ patient[3] }}</td>
@@ -64,7 +66,8 @@
         </table>
     </div>
 <script> 
-    function openModifyPage( name, phone, age, gender, diagnosis, treatment, date) {
+    function openModifyPage(name, phone, age, gender, diagnosis, treatment, date) {
+        {% if user_type != "Admin" %}
         window.location.href = '/modify?id=' + encodeURIComponent(name) +
             '&name=' + encodeURIComponent(name) +
             '&phone=' + encodeURIComponent(phone) +
@@ -73,10 +76,8 @@
             '&diagnosis=' + encodeURIComponent(diagnosis) +
             '&treatment=' + encodeURIComponent(treatment) +
             '&date=' + encodeURIComponent(date);
+        {% endif %}
     }
-
-
-    </script> 
-
+</script> 
 </body>
 </html>

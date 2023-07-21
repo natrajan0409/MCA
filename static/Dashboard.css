@@ -87,18 +87,18 @@ body {
 }
 
 /* Search patient form */
-.search-patient {
+.top-left {
     margin-bottom: 20px;
 }
 
-.search-patient input[type="text"] {
+.top-left input[type="text"] {
     padding: 8px;
     font-size: 16px;
     border: 1px solid #ccc;
     border-radius: 4px;
 }
 
-.search-patient button {
+.top-left button {
     background-color: #4CAF50;
     color: white;
     padding: 8px 16px;

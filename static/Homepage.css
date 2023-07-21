@@ -123,7 +123,7 @@ tr:nth-child(even) {
   font-weight: bold;
   }
   
-  input[type="text"], input[type="tel"], input[type="number"], input[type="date"], select {
+  input[type="Email"],input[type="text"], input[type="tel"], input[type="number"], input[type="date"], select {
   width: 300px;
   padding: 10px;
   border: 1px solid #ccc;
@@ -133,7 +133,7 @@ tr:nth-child(even) {
   margin-bottom: 10px;
   }
   
-  input[type="text"]:focus, input[type="tel"]:focus, input[type="number"]:focus, input[type="date"]:focus, select:focus {
+  input[type="text"]:focus,input[type="Email"]:focus, input[type="tel"]:focus, input[type="number"]:focus, input[type="date"]:focus, select:focus {
   outline: none;
   border-color: #007bff;
   }
