@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" type="text/css" href="/static/modify.css">
+<title>Modify Employ Details</title>
+
+<body>
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <div class="button-container">
+                {% if user_type == "Admin" %}
+                <button onclick="deleteRecord()">Delete Record</button>
+                <button onclick="goHome()">Back</button>
+                {% endif %}
+            </div>
+
+            <form id="modifyEmployForm" method="post" action="/update_record">
+                <div class="form-container">
+                    <input type="text" id="Username" name="Username" class="form-control" placeholder="Username" pattern="[A-Za-z\s]+" required readonly>
+                    <input type="number" id="Password" name="Password" class="form-control" placeholder="Password" required>
+                    <input type="email" id="email" class="form-control" placeholder="Enter Email" name="email" required readonly>
+                    <select id="role" name="role" class="form-control" required readonly>
+                        <option value="receptionist">Receptionist</option>
+                        <option value="doctor">Doctor</option>
+                    </select>
+                    <input type="text" id="specialization" name="specialization" class="form-control" placeholder="Specialization" pattern="[A-Za-z\s]+" required >
+                    <input type="text" id="contact_number" name="contact_number" class="form-control" placeholder="Contact Number" pattern="[0-9]{10}*" required>
+                    <select id="Activestatus" name="Activestatus">
+                        <option value="true">Active</option>
+                        <option value="false">Inactive</option>
+                    </select>
+                </div>
+                <button type="submit">Update Record</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function deleteRecord() {
+            if (confirm('Are you sure you want to delete this record?')) {
+                var form = document.getElementById('modifyEmployForm');
+                form.action = "/delete_record";
+                form.submit();
+            } else {
+                // Handle cancel action (optional)
+            }
+        }
+
+        function goBack() {
+            window.history.back();
+        }
+
+        function goHome() {
+            window.location.href = "/home";
+        }
+
+         // Automatically redirect back to Add_sub_user page after 5 seconds
+         setTimeout(function () {
+            window.location.href = "/Add_sub_user";
+        }, 5000); // 5000 milliseconds = 5 seconds
+    </script>
+</body>
+
+</html>
