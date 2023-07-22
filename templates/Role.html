@@ -35,8 +35,7 @@
 
                 <div class="form-group">
                     <label for="Email">Email:</label>
-                    <input type="email" id="Email" name="Email" class="form-control" placeholder="Email"
-                        pattern="[A-Za-z\s]+" required>
+                    <input type="email" id="email" class="form-control" placeholder="Enter Email" name="email" >
                 </div>
 
                 <div class="form-group">
@@ -69,28 +68,23 @@
         </div>
     </div>
 
-    <table>
-      <tr>
+    <table id="employeeTable">
+        <tr>
           <th>Employ_name</th>
           <th>Email</th>
           <th>User_type</th>
           <th>Active</th>
-      </tr>
-      <!-- Table rows -->
-      {% for employee in employee_details %}
-      <tr>
+        </tr>
+        <!-- Table rows -->
+        {% for employee in employee_details %}
+        <tr>
+          <td>{{ employee[0] }}</td>
           <td>{{ employee[1] }}</td>
           <td>{{ employee[2] }}</td>
-          <td>{{ employee[3] }}</td>
-          <td>
-              <input type="checkbox" name="active_status" {% if employee[4] == 'TRUE' %}checked{% endif %}
-                  onclick="toggleActiveStatus(this)">
-              <!-- Hidden input to store the actual value -->
-              <input type="hidden" name="active_status_hidden" value="{{ employee[4] }}">
-          </td>
-      </tr>
-      {% endfor %}
-  </table>
+          <td>{{ "Active" if employee[3] == 'TRUE' else "In-Active" }}</td>
+        </tr>
+        {% endfor %}
+      </table>
 
     <script>
         var modal = document.getElementById("AddSubUserModal");
@@ -111,19 +105,16 @@
             modal.style.display = "none";
         }
 
-        // Function to toggle the "Active" status
-        function toggleActiveStatus(checkbox) {
-            // Get the hidden input element
-            var hiddenInput = checkbox.parentNode.querySelector('input[name="active_status_hidden"]');
-
-            if (checkbox.checked) {
-                // If the checkbox is checked, set the hidden input value to "TRUE"
-                hiddenInput.value = "TRUE";
-            } else {
-                // If the checkbox is unchecked, set the hidden input value to "FALSE"
-                hiddenInput.value = "FALSE";
-            }
+        function openModifyemploy(username, password, user_type, specialization, contact_number, Activestatus) {
+            window.location.href = '/modify_employ?' +
+                'username=' + encodeURIComponent(username) +
+                '&password=' + encodeURIComponent(password) +
+                '&user_type=' + encodeURIComponent(user_type) +
+                '&specialization=' + encodeURIComponent(specialization) +
+                '&contact_number=' + encodeURIComponent(contact_number) +
+                '&Activestatus=' + encodeURIComponent(Activestatus);
         }
+
     </script>
 </body>
 

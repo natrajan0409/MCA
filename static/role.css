@@ -138,38 +138,96 @@ button[type="submit"] {
     background-color:  whitesmoke;
   
     }
-   /* CSS for the modal */
-.modal {
-    display: none; /* Hide the modal by default */
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.4); /* Blackish background with transparency */
-}
 
-.modal-content {
-    background-color: #fefefe;
-    margin: 15% auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%;
-}
-
-/* Styling for the close button (x) */
-.close {
-    color: #aaaaaa;
-    float: right;
-    font-size: 28px;
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.4);
+        }
+        
+        .modal-content {
+        background-color: #f0f0f0;
+        margin:  auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 50%;
+        }
+        
+        h3 {
+          text-align: center;
+          margin-bottom: 40px;
+      }
+      
+      
+        .close {
+        color:black;
+        float: top left;
+        font-size: 28px;
+        font-weight: bold;
+        }
+        
+        .close:hover,
+        .close:focus {
+        color: #aaa;
+        text-decoration: none;
+        cursor: pointer;
+        }
+        
+        .form-group {
+        margin-bottom: 20px;
+        }
+        
+  /* Style the input fields and labels */
+  label {
+    display: inline-block;
+    width: 100px;
     font-weight: bold;
-}
-
-.close:hover,
-.close:focus {
-    color: #000;
-    text-decoration: none;
+    }
+    
+    input[type="Email"],input[type="text"], input[type="tel"], input[type="number"], input[type="date"], select {
+    width: 300px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 16px;
+    margin-bottom: 10px;
+    }
+    
+    input[type="text"]:focus,input[type="Email"]:focus, input[type="tel"]:focus, input[type="number"]:focus, input[type="date"]:focus, select:focus {
+    outline: none;
+    border-color: #007bff;
+    }
+    
+    button[type="submit"] {
+    background-color: #007C02;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
     cursor: pointer;
-}
+    font-size: 16px;
+    padding: 10px 20px;
+    }
+    
+    button[type="submit"]:hover {
+    color: black;
+    background-color:  whitesmoke;
+  
+    }
+    
+    
+    .error-message {
+    color: red;
+    margin-top: 5px;
+    }
+    
+    .success-message {
+    color: green;
+    margin-top: 5px;
+    } 
