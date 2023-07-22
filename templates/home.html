@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="/static/Homepage.css">
     <title>Display Patient Details</title>
-</head>
+    </head>
 <body>
     <h1>Patient Details</h1>
     <div class="top-left">
@@ -16,7 +16,7 @@
     </div>
 
     <div class="top-right">
-      <p>Welcome, {{ username }}</p>
+      <p>Welcome, {{ doctor_name }}</p>
       <button id="myButton" class="green-button">Add</button>
       <button class="blue-button" onclick="location.href='/'">Logout </button>
       {% if user_type == "Admin" %}

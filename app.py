@@ -70,7 +70,7 @@ def login():
         "username": request.form["username"],
         "password": request.form["password"]
     }
-    global user_session ,hospital_id,user_type,greeting,doctor_name,doctor_photo,doctors,patient_details,active_status,employ,hospital_name,location,specialist
+    global user_session ,hospital_id,user_type,current_time,greeting,doctor_name,doctor_photo,doctors,patient_details,active_status,employ,hospital_name,location,specialist
     user_session = data["username"]
     user_type = get_user_type(user_session)
     hospital_id= get_hospital_id(user_session)
@@ -238,7 +238,7 @@ def get_patient_details_for_user(hospital_id):
     return rows
 
 def get_employee_list(hospital_id):
-    query = "select username,email,user_type,Activestatus From users where hospital_id = %s ORDER BY hospital_id DESC LIMIT 50"
+    query = "select username,email,user_type,Activestatus From users where hospital_id = %s  and  user_type != 'Admin' ORDER BY hospital_id DESC LIMIT 50"
     mycursor.execute(query, (hospital_id,))
     rows = mycursor.fetchall()
     return rows
@@ -252,11 +252,10 @@ def get_patient_history(name):
 
 @app.route("/home", methods=['GET', 'POST'])
 def home():
-    
     user_type = get_user_type(user_session)
     hospital_id = get_hospital_id(user_session)
     patient_details = get_patient_details_for_user(hospital_id)  # Assuming you have a function to retrieve patient details based on hospital_id.
-    return render_template("home.html", hospital_id=hospital_id, patient_details=patient_details, user_type=user_type)
+    return render_template("home.html", hospital_id=hospital_id, patient_details=patient_details, user_type=user_type,doctor_name=doctor_name)
 
 @app.route('/add', methods=['POST'])
 def add_record():
@@ -387,7 +386,7 @@ def search_record():
         user_type=user_type
     )
         else:
-          return render_template('home.html',hospital_id=hospital_id, patient_details=results,user_type=user_type)
+          return render_template('home.html',hospital_id=hospital_id, patient_details=results,user_type=user_type,doctor_name=doctor_name)
      
 @app.route('/dashboard.html')
 def doctor_dashboard():
@@ -417,12 +416,14 @@ def get_time_greeting(current_time):
   
   
 def get_doctors_in_same_hospital(hospital_id):
-    query = "SELECT doctor_name,specialization  FROM Doctors_Records WHERE hospital_id = %s ORDER BY id DESC LIMIT 50"
+    query = "SELECT doctor_name, specialization FROM Doctors_Records WHERE hospital_id = %s ORDER BY id DESC LIMIT 50"
     mycursor.execute(query, (hospital_id,))
     rows = mycursor.fetchall()
+
     if rows:
-        doctor_name, specialization = rows
-        return doctor_name, specialization
+        doctor_names = [row[0] for row in rows]
+        specializations = [row[1] for row in rows]
+        return doctor_names, specializations
     else:
         return None, None
 
