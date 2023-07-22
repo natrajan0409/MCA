@@ -1,41 +1,130 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="/static/modify.css">
+    <link rel="stylesheet" type="text/css" href="/static/role.css">
     <title>Create Sub User</title>
 </head>
+
 <body>
     <h1> Add Resource User</h1>
+    <h2>{{ greeting }}, the current time is {{ current_time.strftime("%H:%M") }}</h2>
 
     <div class="top-right">
+
+        <button id="myButton" class="green-button">AddUser</button>
         <button onclick="location.href='/home'">Back to Home</button>
     </div>
-    <form action="/role_page" method="post">
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required><br>
+    <div id="AddSubUserModal" class="modal">
+        <div class="modal-content">
+            <h3>Add Resource User</h3>
+            <form action="/role_page" method="post" action="{{ url_for('add_user') }}">
+                <div class="form-group">
+                    <label for="Username">Username:</label>
+                    <input type="text" id="Username" name="Username" class="form-control" placeholder="Username"
+                        pattern="[A-Za-z\s]+" required>
+                </div>
 
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required><br>
+                <div class="form-group">
+                    <label for="Password">Password:</label>
+                    <input type="number" id="Password" name="Password" class="form-control" placeholder="Password"
+                        required>
+                </div>
 
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required><br>
+                <div class="form-group">
+                    <label for="Email">Email:</label>
+                    <input type="email" id="Email" name="Email" class="form-control" placeholder="Email"
+                        pattern="[A-Za-z\s]+" required>
+                </div>
 
-        <label for="specialization">specialization:</label>
-        <input type="specialization" id="specialization" name="specialization" required><br>
+                <div class="form-group">
+                    <label for="role">Role:</label>
+                    <select id="role" name="role" class="form-control" required>
+                        <option value="receptionist">Receptionist</option>
+                        <option value="doctor">Doctor</option>
+                    </select>
+                </div>
 
-        <label for="contact_number">contact_number:</label>
-        <input type="contact_number" id="contact_number" name="contact_number" required><br>
+                <div class="form-group">
+                    <label for="specialization">Specialization:</label>
+                    <input type="text" id="specialization" name="specialization" class="form-control"
+                        placeholder="Specialization" pattern="[A-Za-z\s]+" required>
+                </div>
 
-        <label for="role">Role:</label>
-        <select id="role" name="role" required>
-            <option value="" disabled selected>Select Role</option>
-            <option value="receptionist">Receptionist</option>
-            <option value="doctor">Doctor</option>
-        </select><br>
+                <div class="form-group">
+                    <label for="contact_number">Contact Number:</label>
+                    <input type="text" id="contact_number" name="contact_number" class="form-control"
+                        placeholder="Contact Number" pattern="[0-9]{10}*" required>
+                </div>
 
-        <input type="submit" value="Create Sub User">
-    </form>
+                <div class="form-group">
+                    <input type="hidden" name="Activestatus" value="true">
+                </div>
+
+                <button type="submit" class="btn btn-primary">Add User</button>
+                <button type="button" class="close" onclick="closeModal()">Close</button>
+            </form>
+        </div>
+    </div>
+
+    <table>
+      <tr>
+          <th>Employ_name</th>
+          <th>Email</th>
+          <th>User_type</th>
+          <th>Active</th>
+      </tr>
+      <!-- Table rows -->
+      {% for employee in employee_details %}
+      <tr>
+          <td>{{ employee[1] }}</td>
+          <td>{{ employee[2] }}</td>
+          <td>{{ employee[3] }}</td>
+          <td>
+              <input type="checkbox" name="active_status" {% if employee[4] == 'TRUE' %}checked{% endif %}
+                  onclick="toggleActiveStatus(this)">
+              <!-- Hidden input to store the actual value -->
+              <input type="hidden" name="active_status_hidden" value="{{ employee[4] }}">
+          </td>
+      </tr>
+      {% endfor %}
+  </table>
+
+    <script>
+        var modal = document.getElementById("AddSubUserModal");
+
+        // Get the button that opens the modal
+        var btn = document.getElementById("myButton");
+
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName("close")[0];
+
+        // When the user clicks the button, open the modal
+        btn.onclick = function () {
+            modal.style.display = "block";
+        }
+
+        // When the user clicks on <span> (x), close the modal
+        function closeModal() {
+            modal.style.display = "none";
+        }
+
+        // Function to toggle the "Active" status
+        function toggleActiveStatus(checkbox) {
+            // Get the hidden input element
+            var hiddenInput = checkbox.parentNode.querySelector('input[name="active_status_hidden"]');
+
+            if (checkbox.checked) {
+                // If the checkbox is checked, set the hidden input value to "TRUE"
+                hiddenInput.value = "TRUE";
+            } else {
+                // If the checkbox is unchecked, set the hidden input value to "FALSE"
+                hiddenInput.value = "FALSE";
+            }
+        }
+    </script>
 </body>
+
 </html>

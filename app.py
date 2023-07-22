@@ -68,7 +68,7 @@ def login():
         "username": request.form["username"],
         "password": request.form["password"]
     }
-    global user_session ,hospital_id,user_type,greeting,doctor_name,doctor_photo,doctors,patient_details
+    global user_session ,hospital_id,user_type,greeting,doctor_name,doctor_photo,doctors,patient_details,active_status,employ
     user_session = data["username"]
     user_type = get_user_type(user_session)
     hospital_id= get_hospital_id(user_session)
@@ -78,19 +78,23 @@ def login():
     doctor_photo = "defaut_pic.jpg"   # Replace with the path to the doctor's photo
     doctors = get_doctors_in_same_hospital(hospital_id)
     patient_details = get_patient_details_for_user(hospital_id)
+    employ=get_employee_list(hospital_id)
+    active_status=get_Activestatus(user_session,hospital_id)
+    # print(user_session,hospital_id)
     query = "SELECT * FROM users WHERE username = %s AND password = %s"
     mycursor.execute(query, (data["username"], data["password"]))
     user = mycursor.fetchone()
     
-    if user:
+    if active_status=="TRUE":
+        if user:
         
-        if user_type == "Doctor":
-            return redirect(url_for("doctor_dashboard"))
+            if user_type == "Doctor":
+                return redirect(url_for("doctor_dashboard"))
+            else:
+                return redirect(url_for("home"))
         else:
-            return redirect(url_for("home"))
-    else:
-        return "Invalid username or password"
-    
+            return "Invalid username or password"
+    return " user has deactivated by Admin,  contact you admin to reactivate"
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
@@ -169,6 +173,19 @@ def reset():
   else:
     return "Invalid OTP"
 
+
+def get_Activestatus(user_id, hospital_id):
+    query = "SELECT Activestatus FROM users WHERE username = %s AND hospital_id = %s"
+    mycursor.execute(query, (user_id, hospital_id))
+    Activestatus = mycursor.fetchone()
+
+    if Activestatus:
+         return Activestatus[0]
+    else:
+         return None
+
+
+
 def get_user_type(user_id):
     query = "SELECT user_type FROM users WHERE username = %s"
     mycursor.execute(query, (user_id,))
@@ -206,6 +223,12 @@ def get_patient_details_for_user(hospital_id):
     rows = mycursor.fetchall()
     return rows
 
+def get_employee_list(hospital_id):
+    query = "select  username,email,user_type From users where hospital_id = %s ORDER BY hospital_id DESC LIMIT 50"
+    mycursor.execute(query, (hospital_id,))
+    rows = mycursor.fetchall()
+    return rows
+
   
 def get_patient_history(name):
     query = "select diagnosis,treatment,visit_date from patienthistory WHERE name = %s"
@@ -215,6 +238,7 @@ def get_patient_history(name):
 
 @app.route("/home", methods=['GET', 'POST'])
 def home():
+    
     user_type = get_user_type(user_session)
     hospital_id = get_hospital_id(user_session)
     patient_details = get_patient_details_for_user(hospital_id)  # Assuming you have a function to retrieve patient details based on hospital_id.
@@ -334,8 +358,6 @@ def search_record():
     query = "SELECT * FROM patientdetails WHERE hospital_id = %s AND (Name LIKE %s OR phone_number LIKE %s OR Age LIKE %s OR Sex LIKE %s OR Diagnosis LIKE %s OR Treatment LIKE %s OR Next_appointment_date LIKE %s) ORDER BY Patient_ID Desc"
     current_time = datetime.now()
     if request.method == 'POST':
-        print(user_session)
-        print(user_type)
         search_term = "%" + request.form['searchInput'] + "%"
         cursor = mydb.cursor()
        
@@ -398,7 +420,8 @@ def add_user():
             "email": request.form.get("Email"),
             "user_type": request.form.get("role"),
             "specialization": request.form.get("specialization"),
-            "contact_number": request.form.get("contact_number")
+            "contact_number": request.form.get("contact_number"),
+            "Activestatus": request.form.get("TRUE")
         }
 
         # Retrieve user's ID from the session
@@ -408,8 +431,8 @@ def add_user():
         hospital_id = get_hospital_id(username)
 
         # Insert user details into the "users" table
-        query = "INSERT INTO users (username, password, email, user_type, hospital_id) VALUES (%s, %s, %s, %s, %s)"
-        mycursor.execute(query, (data["username"], data["password"], data["email"], data["user_type"], hospital_id))
+        query = "INSERT INTO users (username, password, email, user_type, hospital_id,Activestatus) VALUES (%s, %s, %s, %s, %s,%s)"
+        mycursor.execute(query, (data["username"], data["password"], data["email"], data["user_type"], data["hospital_id"],data["Activestatus"]))
         mydb.commit()
 
         # Check if the user is a doctor and insert additional details into the "hospitals" table
@@ -424,55 +447,19 @@ def add_user():
 
 		
 		
-
-
-# @app.route("/role", methods=["GET"])
-# def role_page():
-#     if request.method == "GET":
-#         # Render the HTML page for the form
-#         return render_template("Role.html")
-
-#     # POST request handling
-#     # Extract the form data
-#     username = request.form["username"]
-#     password = request.form["password"]
-#     email = request.form["email"]
-#     role = request.form["role"]
-#     specialization = request.form["specialization"]
-#     contact_number = request.form["contact_number"]
-    
-#     # Validate the form data (you can add more validation if required)
-#     if not username or not password or not email or not role:
-#         return "Please fill out all fields."
-
-#     # Check if the username is already taken
-#     user_session = get_login_user(username)
-#     if username in user_session:
-#         return "Username already exists. Please choose a different username."
-
-#     # Store the sub-user data in the dictionary (you can replace this with database insertion)
-#     user_session[username] = {
-#         "password": password,
-#         "specialization": specialization,
-#         "contact_number": contact_number,
-#         "role": role,
-#         "email": email,
-#     }
-#     # Get the user_type from the session
-#     user_type = get_user_type(user_session)
-
-#     query = "INSERT INTO users (username, password, email, user_type, hospital_id) VALUES (%s, %s, %s, %s, %s)"
-#     mycursor.execute(query, (username, password, email, role, hospital_id))
-#     mydb.commit()
-
-#     if role == "Doctor":
-#         query2 = "INSERT INTO doctors_records (doctor_name, specialization, contact_number, email, hospital_id) VALUES (%s, %s, %s, %s, %s)"
-#         mycursor.execute(query2, (username, specialization, contact_number, email, hospital_id))
-#         mydb.commit()
-
-#     # Redirect to a success page or any other desired page
-#     return redirect("/success")
-
+@app.route('/Role.html')
+def Add_sub_user():
+    current_time = datetime.now()
+    employee_details=employ
+    return render_template(
+        "Role.html",
+        current_time=current_time,
+        employee_details=employee_details,
+        user_session=user_session,
+        greeting=greeting,
+        user_type=user_type,
+        hospital_id=hospital_id
+    )
   
 if __name__ == '__main__':
   app.run(debug=True)

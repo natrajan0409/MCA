@@ -21,7 +21,7 @@
       <button class="blue-button" onclick="location.href='/'">Logout </button>
       {% if user_type == "Admin" %}
       <button id="dashboardButton" class="green-button">Dashboard</button>
-      <button id="subUserButton" class="green-button">AddUser</button>
+      <button id="AddUser" class="green-button">AddUser</button>
       {% endif %}
   </div>
 
@@ -77,58 +77,17 @@
               <label for="next_appointment">Next Appointment Date:</label>
               <input type="date" id="next_appointment" name="next_appointment" class="form-control" placeholder="Next Appointment" required>
             </div>
+            
+          <div class="form-group">
+              <input type="hidden" name="Activestatus" value="true">
+          </div>
       
-            <button type="submit" class="btn btn-primary">Add Patient</button>
-            <button type="submit" class="close">Close</button>
+          <button type="submit" class="btn btn-primary">Add User</button>
+          <button type="button" class="close" onclick="closeModal()">Close</button>
           </form>
         </div>
       </div>
     
-    <!-- Add a new sub user in home page -->
-    <div id="AddSubUserModal" class="modal">
-      <div class="modal-content">
-        <h3>Add Resource User</h3>
-        <form action="/role_page"  method="post" action="{{ url_for('add_user') }}">
-          <div class="form-group">
-            <label for="Username">Username:</label>
-            <input type="text" id="Username" Username="Username" class="form-control" placeholder="Username" pattern="[A-Za-z\s]+" required>
-          </div>
-    
-          <div class="form-group">
-            <label for="Password">Password:</label>
-            <input type="number" id="Password" name="Password" class="form-control" placeholder="Password"  required>
-          </div>
-    
-          <div class="form-group">
-            <label for="Email">Email:</label>
-            <input type="Email" id="Email" name="Email" class="form-control" placeholder="Email" pattern="[A-Za-z\s]+" required>
-          </div>
-    
-          <div class="form-group">
-            <label for="role">role:</label>
-            <select id="role" name="role" class="form-control" required>
-              <option value="receptionist">Receptionist</option>
-              <option value="doctor">Doctor</option>
-            </select>
-          </div>
-    
-          <div class="form-group">
-            <label for="specialization">specialization:</label>
-            <input type="text" id="specialization" name="specialization" class="form-control" placeholder="specialization" pattern="[A-Za-z\s]+" required>
-          </div>
-    
-          <div class="form-group">
-            <label for="contact_number">contact_number:</label>
-            <input type="text" id="contact_number" name="contact_number" class="form-control" placeholder="contact_number" pattern="[0-9]{10}*" required>
-          </div>
-    
-               
-          <button type="submit" class="btn btn-primary">Add user</button>
-          <button type="submit" class="close">Close</button>
-        </form>
-      </div>
-    </div>
-
 <body>
 	<table>
 		<tr>
@@ -157,7 +116,6 @@
 	<script>
         // Get the modal
         var modal = document.getElementById("addPatientModal");
-        var modal = document.getElementById("AddSubUserModal");
 
         // Get the button that opens the modal
         var btn = document.getElementsByClassName("green-button")[0];
@@ -173,6 +131,9 @@
         location.href = '/dashboard.html';
     };
 
+     document.getElementById("AddUser").onclick = function() {
+      location.href = '/Role.html';
+    };
 
         // When the user clicks on <span> (x),
 // When the user clicks on <span> (x), close the modal
@@ -197,8 +158,6 @@
             '&treatment=' + encodeURIComponent(treatment) +
             '&date=' + encodeURIComponent(date);
     }
-
-
     </script> 
 </body>
 </html>
