@@ -58,3 +58,14 @@ CREATE TABLE `users` (
    `Activestatus` enum('TRUE','FALSE') NOT NULL,
    PRIMARY KEY (`id`)
  ) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+
+
+
+CREATE TABLE sessions (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(255) NOT NULL,
+    token VARCHAR(255) NOT NULL,
+    refresh_token VARCHAR(255) NOT NULL,
+    expiration DATETIME NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);

@@ -1,4 +1,4 @@
-from curses import flash
+from flask import flash
 from datetime import datetime
 import logging
 import smtplib
