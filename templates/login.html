@@ -1,23 +1,55 @@
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <title>User Login</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-  </head>
-  <body>
+    <script>
+        window.onload = function() {
+            const authToken = document.cookie.split('; ').find(row => row.startsWith('auth_token='));
+            if (authToken) {
+                // Extract the token value
+                const token = authToken.split('=')[1];
+
+                // Send a request to the server-side endpoint to validate the token
+                fetch('/validate_token', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ token: token })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Token is valid, redirect to the protected page
+                        window.location.href = '/home';
+                    } else {
+                        // Token is invalid, show the login form
+                        // (No need to redirect, the form will be displayed)
+                    }
+                })
+                .catch(error => {
+                    console.error('Error validating token:', error);
+                    // Show the login form
+                });
+            }
+        };
+    </script>
+</head>
+<body>
     <div class="container">
-      <h1>Login</h1>
-      <form action="{{ url_for('login') }}" method="post">
-        <label for="username"><b>Username</b></label>
-        <input type="text" placeholder="Enter Username" name="username" required>
+        <h1>Login</h1>
+        <form action="{{ url_for('login') }}" method="post">
+            <label for="username"><b>Username</b></label>
+            <input type="text" placeholder="Enter Username" name="username" required>
 
-        <label for="password"><b>Password</b></label>
-        <input type="password" placeholder="Enter Password" name="password" required>
+            <label for="password"><b>Password</b></label>
+            <input type="password" placeholder="Enter Password" name="password" required>
 
-        <button type="submit">Login</button>
-      </form>
-      <p>Don't have an account? <a href="{{ url_for('register') }}">Sign up</a> </p>
-      <p><a href="{{ url_for('forgot') }}">Forgot Username/Password?</a></p>
+            <button type="submit">Login</button>
+        </form>
+        <p>Don't have an account? <a href="{{ url_for('register') }}">Sign up</a> </p>
+        <p><a href="{{ url_for('forgot') }}">Forgot Username/Password?</a></p>
     </div>
-  </body>
+</body>
 </html>

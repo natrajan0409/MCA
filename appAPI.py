@@ -1,4 +1,5 @@
-from flask import Flask, flash, render_template, request, redirect, session, url_for, jsonify
+import secrets
+from flask import Flask, flash, make_response, render_template, request, redirect, session, url_for, jsonify
 from datetime import datetime, timedelta
 import mysql.connector
 import random
@@ -71,7 +72,7 @@ def refresh_session_token(refresh_token):
     return None
 
 def generate_session_token():
-    return random.randint(100000, 999999)
+    return secrets.token_hex(16)
 
 @app.route("/")
 def login_page():
@@ -81,25 +82,63 @@ def login_page():
 def login():
     username = request.form["username"]
     password = request.form["password"]
+
+    # Query to check user existence
     query = "SELECT * FROM users WHERE username = %s AND password = %s"
     mycursor.execute(query, (username, password))
     user = mycursor.fetchone()
 
     if user:
-        session['logged_in'] = True
-        session['username'] = username
-        session['token'] = generate_session_token()
-        session['refresh_token'] = generate_session_token()
-        session['expiration'] = datetime.now() + SESSION_TIMEOUT
-        
-        # Store session data in the database
-        insert_query = "INSERT INTO sessions (username, token, refresh_token, expiration) VALUES (%s, %s, %s, %s)"
-        mycursor.execute(insert_query, (username, session['token'], session['refresh_token'], session['expiration']))
-        mydb.commit()
-        
-        return redirect(url_for("home"))
-    else:
+        # Check for existing active session for the user
+        session_active_query = "SELECT token FROM sessions WHERE username = %s"
+        mycursor.execute(session_active_query, (username,))
+        session_useractive = mycursor.fetchone()
+
+        if session_useractive:  # Update existing session if found
+            token = session_useractive[0]  # Get existing token
+            expiration = datetime.now() + SESSION_TIMEOUT  # Update expiration
+
+            # Update session data in database (optional, might be redundant)
+            update_query = """
+                UPDATE sessions 
+                SET expiration = %s 
+                WHERE username = %s
+            """
+            mycursor.execute(update_query, (expiration, username))
+            mydb.commit()
+
+            # Update session variables (optional, might be redundant)
+            session['expiration'] = expiration
+
+        else:  # Create new session if no active session exists
+            token = generate_session_token()
+            refresh_token = generate_session_token()
+            expiration = datetime.now() + SESSION_TIMEOUT
+
+            session['logged_in'] = True
+            session['username'] = username
+            session['token'] = token
+            session['refresh_token'] = refresh_token
+            session['expiration'] = expiration
+
+            # Insert new session data into the database
+            insert_query = """
+                INSERT INTO sessions (username, token, refresh_token, expiration) 
+                VALUES (%s, %s, %s, %s)
+            """
+            mycursor.execute(insert_query, (username, token, refresh_token, expiration))
+            mydb.commit()
+
+        # Set the token as a cookie (use the existing token if available)
+        resp = make_response(redirect(url_for("home")))
+        resp.set_cookie('auth_token', token, httponly=True, secure=True, samesite='Strict')
+
+        # Ensure the response is returned
+        return resp
+
+    else:  # Invalid username or password
         return "Invalid username or password"
+
 
 @app.route("/home")
 def home():
@@ -109,8 +148,20 @@ def home():
 
 @app.route("/logout")
 def logout():
+    # Clear Flask session
     session.clear()
-    return redirect(url_for("login_page"))
+
+    # Create response for redirection
+    resp = make_response(redirect(url_for("login_page")))
+
+    # Remove the authentication cookie
+    resp.set_cookie('auth_token', '', expires=0, httponly=True, secure=True, samesite='Strict')
+
+    # Optional: Debugging log to verify logout flow
+    app.logger.info("User logged out and session cleared.")
+
+    return resp
+
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
@@ -285,7 +336,18 @@ def add_record():
 
     return render_template("add_new_record.html")
 
+@app.route('/validate_token', methods=['POST'])
+def validate_token():
+    token = request.json.get('token')
+    query = "SELECT * FROM sessions WHERE token = %s"
+    mycursor.execute(query, (token,))
+    token_db = mycursor.fetchone()
 
+    if token_db:
+        
+        return jsonify({'success': True})
+    else:
+        return jsonify({'success': False, 'message': 'Invalid token'})
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='192.168.29.184',port=5000,debug=True)
